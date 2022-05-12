@@ -1,5 +1,5 @@
 import './App.css';
-import React from "react";
+import React, {useState} from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 
 const unityContext = new UnityContext({
@@ -11,6 +11,13 @@ const unityContext = new UnityContext({
 
 
 function App() {
+  const [shapeSize, setShapeSize] = useState(0)
+  const maxShapeSize = 100
+  
+  const handleShapeSlider = (event) => {
+    setShapeSize(event.target.value)
+  }
+
   return (
     <div className="flex justify-between" style={{ height: "100vh", width: "100vw" }}>
       <div className="w-full p-6 sm:w-60 dark:bg-coolGray-900 dark:text-coolGray-100">
@@ -46,12 +53,22 @@ function App() {
           </div>
 
           <div className="space-y-2">
-            <h2 className="text-sm font-semibold tracking-widest uppercase dark:text-coolGray-400">Color Picker</h2>
+            <h2 className="text-sm font-semibold tracking-widest uppercase dark:text-coolGray-400">Shape</h2>
             <div className="flex flex-col space-y-1">
-              <label for="favcolor">Select:</label>
-              <input type="color" id="favcolor" name="favcolor" value="#ff0000" />
+              <label for="range" class="font-bold text-gray-600">Size: {shapeSize}</label>
+              <input type="range" name="shape" step="1" min="0" max={maxShapeSize} value={shapeSize} class="w-full h-2 bg-blue-100 appearance-none" onChange={handleShapeSlider}/>
             </div>
           </div>
+
+          <div className="space-y-2">
+            <h2 className="text-sm font-semibold tracking-widest uppercase dark:text-coolGray-400">Color Picker</h2>
+            <div className="flex flex-col space-y-1">
+              <label for="colorpicker">Select:</label>
+              <input type="color" id="colorpicker" name="colorpicker" value="#ff0000" />
+            </div>
+          </div>
+
+
         </nav>
       </div>
 
@@ -59,7 +76,7 @@ function App() {
         <Unity className="UnityPlayer w-full h-full" unityContext={unityContext} />
       </div>
 
-      <div style={{height: "180px", width:"320px"}} className="bg-black absolute top-0 right-0 text-white">
+      <div style={{ height: "180px", width: "320px" }} className="bg-black absolute top-0 right-0 text-white">
         <span className="h-full w-full flex justify-center items-center">Feed here...</span>
       </div>
     </div>
