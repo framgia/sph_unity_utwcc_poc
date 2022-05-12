@@ -53,3 +53,22 @@ li {
     width: 20vw;
     height: 100vh;
 }
+
+.preview {
+    height: 180px;
+    width: 320px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: black;
+    color: white;
+}
+
+.preview > span {
+    color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}

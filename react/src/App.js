@@ -12,17 +12,31 @@ const unityContext = new UnityContext({
 
 function App() {
   return (
-    <div className="flex justify-between" style = {{height: "100vh", width: "100vw"}}>
+    <div className="flex justify-between" style={{ height: "100vh", width: "100vw" }}>
       <div className="w-full p-6 sm:w-60 dark:bg-coolGray-900 dark:text-coolGray-100">
         <nav className="space-y-8 text-sm">
 
           <div className="space-y-2">
-            <h2 className="text-sm font-semibold tracking-widest uppercase dark:text-coolGray-400">Image, Video, Audio tools</h2>
+            <h2 className="text-sm font-semibold tracking-widest uppercase dark:text-coolGray-400">Image</h2>
             <div className="flex flex-col space-y-1">
-              Something goes here...
+              <button type="button" className="px-8 py-3 font-semibold rounded hover:bg-coolGray-200 dark:bg-coolGray-100 dark:text-coolGray-800">Webcam Capture</button>
             </div>
           </div>
-          
+
+          <div className="space-y-2">
+            <h2 className="text-sm font-semibold tracking-widest uppercase dark:text-coolGray-400">Video</h2>
+            <div className="flex flex-col space-y-1">
+              <button type="button" className="px-8 py-3 font-semibold rounded hover:bg-coolGray-200 dark:bg-coolGray-100 dark:text-coolGray-800">Live Capture</button>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <h2 className="text-sm font-semibold tracking-widest uppercase dark:text-coolGray-400">Audio</h2>
+            <div className="flex flex-col space-y-1">
+              <button type="button" className="px-8 py-3 font-semibold rounded hover:bg-coolGray-200 dark:bg-coolGray-100 dark:text-coolGray-800">Record</button>
+            </div>
+          </div>
+
           <div className="space-y-2">
             <h2 className="text-sm font-semibold tracking-widest uppercase dark:text-coolGray-400">Upload media</h2>
             <div className="flex flex-col space-y-1">
@@ -43,6 +57,10 @@ function App() {
 
       <div className="flex items-center justify-center bg-black w-full">
         <Unity className="UnityPlayer w-full h-full" unityContext={unityContext} />
+      </div>
+
+      <div style={{height: "180px", width:"320px"}} className="bg-black absolute top-0 right-0 text-white">
+        <span className="h-full w-full flex justify-center items-center">Feed here...</span>
       </div>
     </div>
   );
