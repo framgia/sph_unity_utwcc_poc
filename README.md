@@ -1,7 +1,7 @@
 "# sph_unity_utwcc_poc" 
 ## Building and Running the project
 
-1. Open wsl/ubuntu terminal
+1. Open wsl/ubuntu terminal then Clone Repository using this command.
     - git clone `https://github.com/framgia/sph_unity_utwcc_poc.git`
 
 2. Launch Unity Hub and open the project through *`sph_unity_utwcc_poc > unity`*
