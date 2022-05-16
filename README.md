@@ -14,6 +14,6 @@
 5. Then install the packages through `npm install`
 6. Go to your client folder where you recently built the project and copy   the "Build" folder
 7. Paste it in the "public" folder in your React directory      *(`sph_unity_utwcc_poc > react > public`)*
-8. Then to run the project, use 'npm run start' command in the terminal inside react folder
+8. Then to run the project, use `npm run start` command in the terminal inside react folder
 
 
