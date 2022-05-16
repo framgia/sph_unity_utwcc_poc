@@ -10,7 +10,7 @@
      - Under platform, click on WebGL and then click Build.  *(if you don't have yet, you can just click install with unity hub)*
      - Then select the client folder in sph_unity_utwcc_poc and build the project there. *(`sph_unity_utwcc_poc > client`)*
 
-4. In the terminal, redirect to the "react" folder by using `cd react` 
+4. In the terminal, open `sph_unity_utwcc_poc ` then redirect to the "react" folder by using `cd react` 
 5. Then install the packages through `npm install`
 6. Go to your client folder where you recently built the project and copy   the "Build" folder
 7. Paste it in the "public" folder in your React directory      *(`sph_unity_utwcc_poc > react > public`)*
