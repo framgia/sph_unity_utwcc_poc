@@ -1,4 +1,4 @@
-"# sph_unity_utwcc_poc" 
+# sph_unity_utwcc_poc
 ## Building and Running the project
 
 1. Open wsl/ubuntu terminal then Clone Repository using this command.
