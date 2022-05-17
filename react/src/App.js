@@ -13,6 +13,7 @@ const unityContext = new UnityContext({
 
 function App() {
   const [shapeSize, setShapeSize] = useState(0)
+  const [colorValue, setColorValue] = useState('#ff0000')
   const maxShapeSize = 100
   const { colorChange } = colorPicker()
   const { startRecord, stopRecord } = recordAction()
@@ -70,7 +71,7 @@ function App() {
             <h2 className="text-sm font-semibold tracking-widest uppercase text-coolGray-400">Color Picker</h2>
             <div className="flex flex-col space-y-1">
               <label htmlFor="colorpicker">Select:</label>
-              <input type="color" id="colorpicker" name="colorpicker" value="#ff0000" onChange={e => colorChange(e, unityContext)}/>
+              <input type="color" id="colorpicker" name="colorpicker" value={colorValue} onChange={e => colorChange(e, unityContext, setColorValue)}/>
             </div>
           </div>
 
