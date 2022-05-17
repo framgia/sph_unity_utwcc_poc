@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 import recordAction from './recorder-action';
+import colorPicker from './color-picker';
 
 const unityContext = new UnityContext({
   loaderUrl: "Build/client.loader.js",
@@ -13,10 +14,13 @@ const unityContext = new UnityContext({
 function App() {
   const [shapeSize, setShapeSize] = useState(0)
   const maxShapeSize = 100
+  const { colorChange } = colorPicker()
   const { startRecord, stopRecord } = recordAction()
 
   const handleShapeSlider = (event) => {
     setShapeSize(event.target.value)
+    const scale = event.target.value;
+    unityContext.send('Scaler', 'UpdateObjectScale', scale);
   }
 
   return (
@@ -66,7 +70,7 @@ function App() {
             <h2 className="text-sm font-semibold tracking-widest uppercase text-coolGray-400">Color Picker</h2>
             <div className="flex flex-col space-y-1">
               <label htmlFor="colorpicker">Select:</label>
-              <input type="color" id="colorpicker" name="colorpicker" value="#ff0000" />
+              <input type="color" id="colorpicker" name="colorpicker" value="#ff0000" onChange={e => colorChange(e, unityContext)}/>
             </div>
           </div>
 
