@@ -13,7 +13,7 @@ const unityContext = new UnityContext({
 
 function App() {
   const [shapeSize, setShapeSize] = useState(0)
-  const [colorValue, setColorValue] = useState('#ff0000')
+  const [colorValue, setColorValue] = useState('#0018EE')
   const maxShapeSize = 100
   const { colorChange } = colorPicker()
   const { startRecord, stopRecord } = recordAction()
