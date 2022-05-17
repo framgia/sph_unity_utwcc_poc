@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
 import recordAction from './recorder-action';
 
@@ -14,12 +14,6 @@ function App() {
   const [shapeSize, setShapeSize] = useState(0)
   const maxShapeSize = 100
   const { startRecord, stopRecord } = recordAction()
-
-  // useEffect(() => {
-  //   const script = document.createElement("script");
-  //   script.src = "https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js";
-  //   script.async = true;
-  // })
 
   const handleShapeSlider = (event) => {
     setShapeSize(event.target.value)
