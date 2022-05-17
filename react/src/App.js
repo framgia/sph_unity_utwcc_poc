@@ -1,19 +1,20 @@
 import './App.css';
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Unity, { UnityContext } from "react-unity-webgl";
+import recordAction from './recorder-action';
 
 const unityContext = new UnityContext({
   loaderUrl: "Build/client.loader.js",
   dataUrl: "Build/client.data.unityweb",
   frameworkUrl: "Build/client.framework.js.unityweb",
   codeUrl: "Build/client.wasm.unityweb",
-});
-
+}); 
 
 function App() {
   const [shapeSize, setShapeSize] = useState(0)
   const maxShapeSize = 100
-  
+  const { startRecord, stopRecord } = recordAction()
+
   const handleShapeSlider = (event) => {
     setShapeSize(event.target.value)
   }
@@ -40,7 +41,8 @@ function App() {
           <div className="space-y-2">
             <h2 className="text-sm font-semibold tracking-widest uppercase text-coolGray-400">Audio</h2>
             <div className="flex flex-col space-y-1">
-              <button type="button" className="px-8 py-3 font-semibold rounded hover:bg-coolGray-200 bg-coolGray-100 text-coolGray-800">Record</button>
+              <button type="button" className="px-8 py-3 font-semibold rounded hover:bg-coolGray-200 bg-coolGray-100 text-coolGray-800" onClick={startRecord}>Start Record</button>
+              <button type="button" className="px-8 py-3 font-semibold rounded hover:bg-coolGray-200 bg-coolGray-100 text-coolGray-800" onClick={stopRecord}>Stop Record</button>
             </div>
           </div>
 
