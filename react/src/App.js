@@ -1,19 +1,29 @@
 import './App.css';
-import React, { useState } from "react";
+import React, {useState, useEffect} from "react";
+
 import Unity, { UnityContext } from "react-unity-webgl";
 import recordAction from './recorder-action';
 import colorPicker from './color-picker';
+import Webcam from "react-webcam";
+import axios from 'axios';
+
+
+const buildURL = "client/Build";
 
 const unityContext = new UnityContext({
-  loaderUrl: "Build/client.loader.js",
-  dataUrl: "Build/client.data.unityweb",
-  frameworkUrl: "Build/client.framework.js.unityweb",
-  codeUrl: "Build/client.wasm.unityweb",
-}); 
+  loaderUrl: buildURL + "/client.loader.js",
+  dataUrl: buildURL + "/client.data.unityweb",
+  frameworkUrl: buildURL + "/client.framework.js.unityweb",
+  codeUrl: buildURL + "/client.wasm.unityweb",
+});
+
 
 function App() {
+  const webcamRef = React.useRef(null);
   const [shapeSize, setShapeSize] = useState(0)
   const [colorValue, setColorValue] = useState('#0018EE')
+  const [imageSource, setImageSource] = useState();
+  const [imageBlob, setImageBlob] = useState();
   const maxShapeSize = 100
   const { colorChange } = colorPicker()
   const { startRecord, stopRecord } = recordAction()
@@ -24,6 +34,55 @@ function App() {
     unityContext.send('Scaler', 'UpdateObjectScale', scale);
   }
 
+  const videoConstraints = {
+      width: 1280,
+      height: 720,
+      facingMode: "user"
+  };
+
+  useEffect(() => {
+    fetch(imageSource)
+    .then(res => res.blob())
+    .then(data => setImageBlob(data))
+  }, [imageSource]);
+
+  const postData = (data) => {
+      const url = "http://localhost:8000/upload-photo"
+      const formData = new FormData();
+      formData.append("myphoto.png", data);
+        
+      axios.post(url, formData, {
+        headers: {'content-type': 'multipart/form-data'}
+      })
+      .then(res => {
+        unityContext.send("Script", "DisplayImage");
+        console.warn(res.data);
+      })
+
+  }
+
+  useEffect(() => {
+    postData(imageBlob);
+    imageBlob && console.log("Sending Captured Image")
+    unityContext.send("Script", "DisplayImage");
+  }, [imageBlob]);
+
+  const capture = React.useCallback(() => {
+    const imageSource = webcamRef.current.getScreenshot();
+    setImageSource(imageSource);
+  }, [webcamRef, setImageSource]);
+
+  const Webcamera = () => (
+    <Webcam
+      audio={false}
+      height={180}
+      ref={webcamRef}
+      screenshotFormat="image/jpeg"
+      width={320}
+      videoConstraints={videoConstraints}
+    />
+  );
+
   return (
     <div className="flex justify-between" style={{ height: "100vh", width: "100vw" }}>
       <div className="w-full p-6 sm:w-60 bg-coolGray-900 text-coolGray-100">
@@ -32,7 +91,14 @@ function App() {
           <div className="space-y-2">
             <h2 className="text-sm font-semibold tracking-widest uppercase text-coolGray-400">Image</h2>
             <div className="flex flex-col space-y-1">
-              <button type="button" className="px-8 py-3 font-semibold rounded hover:bg-coolGray-200 bg-coolGray-100 text-coolGray-800">Webcam Capture</button>
+              <button
+                type="button" 
+                className="px-8 py-3 font-semibold rounded hover:bg-coolGray-200 bg-coolGray-100 text-coolGray-800"
+                onClick={capture}
+              >
+                Image Capture
+              </button>
+              {/* <button onClick={createPost}>Create Post</button> */}
             </div>
           </div>
 
@@ -84,7 +150,7 @@ function App() {
       </div>
 
       <div style={{ height: "180px", width: "320px" }} className="bg-black absolute top-0 right-0 text-white">
-        <span className="h-full w-full flex justify-center items-center">Feed here...</span>
+        <Webcamera />
       </div>
     </div>
   );
