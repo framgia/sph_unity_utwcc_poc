@@ -27,6 +27,36 @@ function App() {
   const maxShapeSize = 100
   const { colorChange } = colorPicker()
   const { startRecord, stopRecord } = recordAction()
+  const [isCameraOn, setIsCameraOn] = useState(false)
+  
+  const toggleCamera = () => {
+    setIsCameraOn(prevState => !prevState)
+    if(isCameraOn){
+      unityContext.send("Quad", "DisableImage")
+    }else{
+      unityContext.send("Quad", "EnableImage")
+    }
+  }
+
+  const captureFrame = React.useCallback(
+    () => {
+        const imageSrc = webcamRef.current.getScreenshot();
+        return imageSrc;
+    },
+    [webcamRef]
+  );
+
+  function sendFrames() {
+    try{
+      const cleanedImageB64 = captureFrame().replace(/^data:image\/[a-z]+;base64,/, "")
+      // console.log(cleanedImageB64);
+      unityContext.send("Quad", "DisplayImage", cleanedImageB64)
+    }catch(e){
+        return "Camera Off"
+    }
+  }
+
+  setInterval(sendFrames, 1000 / 10)
 
   const handleShapeSlider = (event) => {
     setShapeSize(event.target.value);
@@ -104,9 +134,17 @@ function App() {
 
           <div className="space-y-2">
             <h2 className="text-sm font-semibold tracking-widest uppercase text-coolGray-400">Video</h2>
-            <div className="flex flex-col space-y-1">
-              <button type="button" className="px-8 py-3 font-semibold rounded hover:bg-coolGray-200 bg-coolGray-100 text-coolGray-800">Live Capture</button>
-            </div>
+            {
+              (
+                isCameraOn &&
+                <div className="flex flex-row">
+                  <button type="button" className="px-8 py-3 font-semibold rounded hover:bg-red-200 bg-red-300 text-coolGray-800" onClick={toggleCamera}>Off</button>
+                </div>
+              ) ||
+              <div className="flex flex-col space-y-1">
+                <button type="button" className="px-8 py-3 font-semibold rounded hover:bg-coolGray-200 bg-coolGray-100 text-coolGray-800" onClick={toggleCamera}>Webcam Capture</button>
+              </div>
+            }
           </div>
 
           <div className="space-y-2">
