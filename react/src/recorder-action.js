@@ -42,7 +42,7 @@ const recordAction = () => {
     fd.append("myaudio.wav", blob);
     $.ajax({
       type: "POST",
-      url: 'http://localhost:3001/upload',
+      url: 'http://localhost:8000/upload',
       contentType: false,
       processData: false,
       data: fd,
