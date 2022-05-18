@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 
 import Unity, { UnityContext } from "react-unity-webgl";
 import recordAction from './recorder-action';
+import colorPicker from './color-picker';
 import Webcam from "react-webcam";
 import axios from 'axios';
 
@@ -20,13 +21,17 @@ const unityContext = new UnityContext({
 function App() {
   const webcamRef = React.useRef(null);
   const [shapeSize, setShapeSize] = useState(0)
+  const [colorValue, setColorValue] = useState('#0018EE')
   const [imageSource, setImageSource] = useState();
   const [imageBlob, setImageBlob] = useState();
   const maxShapeSize = 100
+  const { colorChange } = colorPicker()
   const { startRecord, stopRecord } = recordAction()
 
   const handleShapeSlider = (event) => {
-    setShapeSize(event.target.value)
+    setShapeSize(event.target.value);
+    const scale = Number(event.target.value);
+    unityContext.send('Scaler', 'UpdateObjectScale', scale);
   }
 
   const videoConstraints = {
@@ -132,7 +137,7 @@ function App() {
             <h2 className="text-sm font-semibold tracking-widest uppercase text-coolGray-400">Color Picker</h2>
             <div className="flex flex-col space-y-1">
               <label htmlFor="colorpicker">Select:</label>
-              <input type="color" id="colorpicker" name="colorpicker" value="#ff0000" />
+              <input type="color" id="colorpicker" name="colorpicker" value={colorValue} onChange={e => colorChange(e, unityContext, setColorValue)}/>
             </div>
           </div>
 
