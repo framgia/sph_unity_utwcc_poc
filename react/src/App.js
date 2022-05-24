@@ -32,9 +32,9 @@ function App() {
   const toggleCamera = () => {
     setIsCameraOn(prevState => !prevState)
     if(isCameraOn){
-      unityContext.send("Quad", "DisableImage")
+      unityContext.send("VideoCanvas", "DisableImage")
     }else{
-      unityContext.send("Quad", "EnableImage")
+      unityContext.send("VideoCanvas", "EnableImage")
     }
   }
 
@@ -50,7 +50,7 @@ function App() {
     try{
       const cleanedImageB64 = captureFrame().replace(/^data:image\/[a-z]+;base64,/, "")
       // console.log(cleanedImageB64);
-      unityContext.send("Quad", "DisplayImage", cleanedImageB64)
+      unityContext.send("VideoCanvas", "DisplayImage", cleanedImageB64)
     }catch(e){
         return "Camera Off"
     }
@@ -85,7 +85,7 @@ function App() {
         headers: {'content-type': 'multipart/form-data'}
       })
       .then(res => {
-        unityContext.send("Script", "DisplayImage");
+        unityContext.send("ImageScript", "DisplayImage");
         console.warn(res.data);
       })
 
@@ -94,7 +94,7 @@ function App() {
   useEffect(() => {
     postData(imageBlob);
     imageBlob && console.log("Sending Captured Image")
-    unityContext.send("Script", "DisplayImage");
+    unityContext.send("ImageScript", "DisplayImage");
   }, [imageBlob]);
 
   const capture = React.useCallback(() => {
