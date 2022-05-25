@@ -10,7 +10,7 @@ public class AudioScript : MonoBehaviour
 
   IEnumerator GetAudioClip()
   {
-    using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("http://localhost:3001/audio", AudioType.WAV))
+    using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("http://localhost:8000/audio", AudioType.WAV))
     {
       yield return www.SendWebRequest();
       if (www.result == UnityWebRequest.Result.ConnectionError)
