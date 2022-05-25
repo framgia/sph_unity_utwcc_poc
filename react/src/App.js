@@ -117,7 +117,12 @@ function App() {
     <div className="flex justify-between" style={{ height: "100vh", width: "100vw" }}>
       <div className="w-full p-6 sm:w-60 bg-coolGray-900 text-coolGray-100">
         <nav className="space-y-8 text-sm">
-
+          <div className="space-y-2">
+            <h2 className="text-sm font-semibold tracking-widest uppercase text-coolGray-400">From Unity</h2>
+            <div className="flex flex-col space-y-1">
+                <label id='from-unity'>Text From Unity</label>
+            </div>
+          </div>
           <div className="space-y-2">
             <h2 className="text-sm font-semibold tracking-widest uppercase text-coolGray-400">Image</h2>
             <div className="flex flex-col space-y-1">
