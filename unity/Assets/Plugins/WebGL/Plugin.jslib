@@ -1,6 +1,6 @@
 const myPlugin = {
-  Hello: function() {
-    window.alert("Hello World");
+  SendToBrowser: function(str) {
+    document.getElementById('from-unity').innerHTML = UTF8ToString(str);
   }
 }
 
